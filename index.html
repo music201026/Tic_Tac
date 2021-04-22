@@ -1,0 +1,227 @@
+<!DOCTYPE HTML>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <title>Tic-tac-toe</title>
+    <style type="text/CSS">
+        table, th, td{
+    border: 1px solid black;
+    border-collapse: collapse;
+    font-family: Calibri;
+    font-size: 48px;
+        }
+        caption {
+            color: navy;
+        }
+        tbody tr {
+            height: 100px;
+        }
+        td {
+            width: 100px;
+            text-align: center;
+        }
+    </style>
+    <script>
+        var count = 1;
+        var BowzO = [,false,false,false,false,false,false,false,false,false];
+        var BowzX = [,false,false,false,false,false,false,false,false,false];
+        var remember = [0,0,0,0,0,0,0,0,0,0];
+        var set = new Array(10);
+        var end = false;
+        var timeoutID;
+        var detect = 0;
+        function slowO() 
+        {
+            detect = 1;
+            window.alert("O wins!");
+            document.getElementById("replayyy").disabled=false; 
+        }
+        function slowX() 
+        {
+            detect = 2;
+            window.alert("X wins!");
+            document.getElementById("replayyy").disabled=false; 
+        }
+        function slowtie() 
+        {
+            detect = 3;
+            window.alert("Tie!");
+            document.getElementById("replayyy").disabled=false; 
+        }
+        function play(e)
+        {
+            item = document.getElementById(e.id);
+            if(count%2!=0)
+            {
+                if(BowzX[item.id]==false&&end==false&&BowzO[item.id]==false)
+                {
+                    item.innerHTML="X";
+                    BowzX[item.id] = true;
+                    remember[count] = item.id;
+                    console.log(remember[count]);
+                    count++;
+                    if(BowzX[1]==true&&BowzX[5]==true&&BowzX[9]==true)
+                    {
+                        end = true;
+                        timeoutID = window.setTimeout(slowX, 500);
+                    }
+                    if(BowzX[5]==true&&BowzX[3]==true&&BowzX[7]==true)
+                    {
+                        end = true;
+                        timeoutID = window.setTimeout(slowX, 500);
+                    }
+                    for(var i = 1 ; i<=7;i+=3)
+                    {
+                        if(BowzX[i]==true&&BowzX[i+1]==true&&BowzX[i+2]==true)
+                        {
+                            end = true;
+                            timeoutID = window.setTimeout(slowX, 500);
+                        }
+                    }
+                    for(var j = 1 ; j<=3;j++)
+                    {
+                        if(BowzX[j]==true&&BowzX[j+3]==true&&BowzX[j+6]==true)
+                        {
+                            end = true;
+                            timeoutID = window.setTimeout(slowX, 500);
+                        }
+                    }
+                    if(count==10&&end==false)
+                    {
+                        end = true;
+                        timeoutID = window.setTimeout(slowtie, 500);
+                    }
+                    
+                }
+                else
+                {
+                    window.alert("Not allowed");
+                }
+            }
+            else if(count%2==0)
+            {
+                if(BowzO[item.id]==false&&end==false&&BowzX[item.id]==false)
+                {
+                    item.innerHTML="O";
+                    BowzO[item.id] = true;
+                    remember[count] = item.id;
+                    console.log(remember[count]);
+                    count++;
+                    if(BowzO[1]==true&&BowzO[5]==true&&BowzO[9]==true)
+                    {
+                        end = true;
+                        timeoutID = window.setTimeout(slowO, 500);
+                    }
+                    if(BowzO[5]==true&&BowzO[3]==true&&BowzO[7]==true)
+                    {
+                        end = true;
+                        timeoutID = window.setTimeout(slowO, 500);
+                    }
+                    for(var k = 1 ; k<=7;k+=3)
+                    {
+                        if(BowzO[k]==true&&BowzO[k+1]==true&&BowzO[k+2]==true)
+                        {
+                            end = true;
+                            timeoutID = window.setTimeout(slowO, 500);
+                        }
+                    }
+                    for(var l = 1 ; l<=3;l++)
+                    {
+                        if(BowzO[l]==true&&BowzO[l+3]==true&&BowzO[l+6]==true)
+                        {
+                            end = true;
+                            timeoutID = window.setTimeout(slowO, 500);
+                        }
+                    }
+                }
+                else
+                {
+                    window.alert("Not allowed");
+                }
+                
+            }  
+        }
+        var myVar 
+        function replay()
+         {
+                set[1] = document.getElementById("1");
+                console.log(set[1]);
+                set[2] = document.getElementById("2");
+                set[3] = document.getElementById("3");
+                set[4] = document.getElementById("4");
+                set[5] = document.getElementById("5");
+                set[6] = document.getElementById("6");
+                set[7] = document.getElementById("7");
+                set[8] = document.getElementById("8");
+                set[9] = document.getElementById("9");
+                 for (var d = 1 ; d<=9 ;d++)
+                {
+                    
+                  set[d].innerHTML=" ";
+              }
+            myVar = window.setInterval(re, 500);
+        }
+        var a=1;
+        function re() 
+        {
+            console.log(count);
+            console.log(a);
+            if(a==count)
+            {
+                if(detect == 1)
+                    slowO();
+                else if(detect == 2)
+                    slowX();
+                else    
+                    slowtie();
+                 clearInterval(myVar);
+            }
+               
+            if(a%2!=0)
+            {
+                set[remember[a]].innerHTML="X";
+                
+            }
+            else if(a%2==0)
+            {
+                set[remember[a]].innerHTML="O";
+            }
+            a++;       
+        }
+    </script>
+</head>
+
+<body>
+    <table id="table">
+        <caption>Tic-Tac-Toe</caption>
+        <tbody>
+            <tr>
+                <td id ="1" onclick="play(this)"></td>
+                <td id ="2" onclick="play(this)"></td>
+                <td id ="3" onclick="play(this)"></td>
+            </tr>
+            <tr>
+                <td id ="4" onclick="play(this)"></td>
+                <td id ="5" onclick="play(this)"></td>
+                <td id ="6" onclick="play(this)"></td>
+            </tr>
+            <tr>
+                <td id ="7" onclick="play(this)"></td>
+                <td id ="8" onclick="play(this)"></td>
+                <td id ="9" onclick="play(this)"></td>
+            </tr>
+        </tbody>
+        <tfoot>
+            <tr>
+                <td colspan="3">
+                    <input id="replayyy" type="button" value="Replay" disabled  onclick="replay()">
+                    <input id="new" type="button" value="New Game" onclick="location.reload()">
+                </td>
+            </tr>
+        </tfoot>
+    </table>
+
+</body>
+
+</html>
